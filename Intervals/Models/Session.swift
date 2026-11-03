@@ -14,6 +14,8 @@ final class Session {
     var plannedSeconds: Int
     /// false = skipped early.
     var completed: Bool
+    /// Seconds spent paused, excluded from focus time. 0 for breaks and manual sessions.
+    var pausedSeconds: Int = 0
     var title: String
     var tag: Tag?
     /// true when added or edited by hand.
@@ -27,6 +29,7 @@ final class Session {
         endedAt: Date,
         plannedSeconds: Int,
         completed: Bool,
+        pausedSeconds: Int = 0,
         title: String = "",
         tag: Tag? = nil,
         isManual: Bool = false,
@@ -38,6 +41,7 @@ final class Session {
         self.endedAt = endedAt
         self.plannedSeconds = plannedSeconds
         self.completed = completed
+        self.pausedSeconds = pausedSeconds
         self.title = title
         self.tag = tag
         self.isManual = isManual
@@ -49,5 +53,6 @@ final class Session {
         set { phaseRaw = newValue.rawValue }
     }
 
-    var durationSeconds: TimeInterval { endedAt.timeIntervalSince(startedAt) }
+    /// Wall-clock span minus pauses. This is what focus time sums.
+    var durationSeconds: TimeInterval { max(0, endedAt.timeIntervalSince(startedAt) - TimeInterval(pausedSeconds)) }
 }

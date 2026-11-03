@@ -138,6 +138,94 @@ struct StartPauseResume {
 }
 
 @MainActor
+struct PausedTime {
+    @Test func pausedTimeIsRecordedAndExcludedFromDuration() {
+        let h = Harness()
+        let t0 = h.clock.now
+        h.engine.start()
+        h.advance(5 * 60)
+        h.engine.pause()
+        #expect(h.engine.pausedSeconds(at: h.clock.now) == 0)
+        h.advance(60 * 60)
+        #expect(h.engine.pausedSeconds(at: h.clock.now) == 3600)
+        h.engine.resume()
+        h.advance(20 * 60)
+
+        let record = h.records[0]
+        #expect(record.startedAt == t0)
+        #expect(record.endedAt == t0.addingTimeInterval(85 * 60))
+        #expect(record.pausedSeconds == 3600)
+        #expect(record.durationSeconds == 1500)
+        #expect(record.completed)
+    }
+
+    @Test func multiplePausesAccumulate() {
+        let h = Harness()
+        h.engine.start()
+        h.advance(60); h.engine.pause(); h.advance(30); h.engine.resume()
+        h.advance(60); h.engine.pause(); h.advance(90); h.engine.resume()
+        h.advance(23 * 60)
+        #expect(h.records[0].pausedSeconds == 120)
+        #expect(h.records[0].durationSeconds == 1500)
+    }
+
+    @Test func skipWhilePausedCountsThePauseUpToTheSkip() {
+        let h = Harness()
+        h.engine.start()
+        h.advance(2 * 60)
+        h.engine.pause()
+        h.advance(10 * 60)
+        h.engine.skip()
+        #expect(h.records[0].pausedSeconds == 600)
+        #expect(h.records[0].durationSeconds == 120)
+        #expect(h.records[0].completed == false)
+    }
+
+    @Test func breaksNeverAccumulatePausedTime() {
+        let h = Harness()
+        h.engine.start()
+        h.advance(25 * 60)
+        h.advance(60)
+        h.engine.pause()
+        h.advance(10 * 60)
+        h.engine.resume()
+        h.advance(4 * 60)
+        h.engine.start()
+        let brk = h.records[1]
+        #expect(brk.phase == .shortBreak)
+        #expect(brk.pausedSeconds == 0)
+        #expect(brk.durationSeconds == 15 * 60)
+    }
+
+    @Test func pausedTimeResetsForTheNextInterval() {
+        let h = Harness()
+        h.engine.start()
+        h.engine.pause(); h.advance(300); h.engine.resume()
+        h.advance(25 * 60)
+        h.engine.skip()           // skip the break, start work
+        h.advance(25 * 60)
+        #expect(h.records[0].pausedSeconds == 300)
+        #expect(h.records[2].phase == .work)
+        #expect(h.records[2].pausedSeconds == 0)
+    }
+
+    @Test func pausedTimeSurvivesRelaunch() {
+        let store = InMemorySnapshotStore()
+        var h = Harness(store: store)
+        h.engine.start()
+        h.advance(60)
+        h.engine.pause()
+        h.sleep(2 * 60 * 60)
+        h = Harness(start: h.clock.now, store: store)
+        #expect(h.engine.pausedSeconds(at: h.clock.now) == 7200)
+        h.engine.resume()
+        h.advance(24 * 60)
+        #expect(h.records[0].pausedSeconds == 7200)
+        #expect(h.records[0].durationSeconds == 1500)
+    }
+}
+
+@MainActor
 struct Completion {
     @Test func workCompletionWritesSessionAndStartsShortBreak() {
         let h = Harness()

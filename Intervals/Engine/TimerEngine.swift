@@ -125,13 +125,32 @@ final class TimerEngine {
     func pause() {
         refresh()
         guard case .running(let phase, let startedAt, let endsAt) = snapshot.state, now < endsAt else { return }
+        snapshot.pausedAt = now
         snapshot.state = .paused(phase: phase, startedAt: startedAt, remaining: endsAt.timeIntervalSince(now))
     }
 
     func resume() {
         refresh()
         guard case .paused(let phase, let startedAt, let remaining) = snapshot.state else { return }
+        endPause(at: now, phase: phase)
         snapshot.state = .running(phase: phase, startedAt: startedAt, endsAt: now.addingTimeInterval(remaining))
+    }
+
+    /// Seconds paused so far in this interval, including a pause still in progress.
+    func pausedSeconds(at date: Date) -> TimeInterval {
+        var total = snapshot.pausedSeconds
+        if let pausedAt = snapshot.pausedAt, phase == .work {
+            total += max(0, date.timeIntervalSince(pausedAt))
+        }
+        return total
+    }
+
+    /// Close an open pause, adding its length for work intervals only.
+    private func endPause(at date: Date, phase: Phase) {
+        if let pausedAt = snapshot.pausedAt, phase == .work {
+            snapshot.pausedSeconds += max(0, date.timeIntervalSince(pausedAt))
+        }
+        snapshot.pausedAt = nil
     }
 
     /// Space in the popover: start, pause or resume depending on state.
@@ -155,6 +174,7 @@ final class TimerEngine {
             if phase.isBreak {
                 closeBreakAndStartWork(at: now, reason: .skipped)
             } else {
+                endPause(at: now, phase: .work)
                 let elapsed = Double(snapshot.plannedSeconds) - remaining
                 if elapsed >= Self.minimumRecordedWork {
                     record(phase: .work, startedAt: startedAt, endedAt: now, completed: false)
@@ -171,6 +191,8 @@ final class TimerEngine {
         snapshot.completedWorkInCycle = 0
         snapshot.plannedSeconds = 0
         snapshot.overtimeAnnounced = false
+        snapshot.pausedAt = nil
+        snapshot.pausedSeconds = 0
     }
 
     /// Re-read the clock and settle any deadline that has passed. Called at
@@ -232,6 +254,8 @@ final class TimerEngine {
                 snapshot.state = .idle(nextPhase: .work)
                 snapshot.completedWorkInCycle = 0
                 snapshot.plannedSeconds = 0
+                snapshot.pausedAt = nil
+                snapshot.pausedSeconds = 0
                 transitionHandler?(TimerTransition(from: phase, to: nil, at: end, reason: .newDay))
                 return
             }
@@ -249,6 +273,8 @@ final class TimerEngine {
         let seconds = settings.seconds(for: phase)
         snapshot.plannedSeconds = seconds
         snapshot.overtimeAnnounced = false
+        snapshot.pausedAt = nil
+        snapshot.pausedSeconds = 0
         snapshot.state = .running(phase: phase, startedAt: date, endsAt: date.addingTimeInterval(TimeInterval(seconds)))
         transitionHandler?(TimerTransition(from: previous, to: phase, at: date, reason: reason))
     }
@@ -273,6 +299,7 @@ final class TimerEngine {
             record(phase: phase, startedAt: startedAt, endedAt: date, completed: date >= endsAt)
             begin(.work, at: date, reason: reason, from: phase)
         case .paused(let phase, let startedAt, let remaining) where phase.isBreak:
+            endPause(at: date, phase: phase)
             record(phase: phase, startedAt: startedAt, endedAt: date, completed: remaining <= 0)
             begin(.work, at: date, reason: reason, from: phase)
         default:
@@ -288,7 +315,8 @@ final class TimerEngine {
             plannedSeconds: snapshot.plannedSeconds,
             completed: completed,
             title: phase == .work ? snapshot.currentTitle : "",
-            tagID: phase == .work ? snapshot.currentTagID : nil
+            tagID: phase == .work ? snapshot.currentTagID : nil,
+            pausedSeconds: phase == .work ? Int(snapshot.pausedSeconds.rounded()) : 0
         ))
     }
 }

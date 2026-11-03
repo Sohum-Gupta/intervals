@@ -51,6 +51,11 @@ struct TimerSnapshot: Codable, Equatable, Sendable {
     var plannedSeconds: Int = 0
     /// Whether the "break is over" alert has fired for the current break.
     var overtimeAnnounced: Bool = false
+    /// When the current pause began, while paused.
+    var pausedAt: Date?
+    /// Seconds spent paused during the current work interval. Breaks never
+    /// accumulate this: a break is always the real gap.
+    var pausedSeconds: TimeInterval = 0
 }
 
 /// Where the snapshot lives. UserDefaults in the app, memory in tests.

@@ -85,7 +85,7 @@ struct TimerSnapshot: Codable {
 Rules:
 
 - Start from idle: `running(phase, now, now + length(phase))`.
-- Pause: store `remaining = endsAt - now`. Resume: `endsAt = now + remaining`. A pause never expires; a paused timer waits until you come back.
+- Pause: store `remaining = endsAt - now`. Resume: `endsAt = now + remaining`. A pause never expires; a paused timer waits until you come back. Time spent paused during work is accumulated and written to the Session as `pausedSeconds`, so it never counts as focus time. Breaks accumulate nothing: a break is always the real gap.
 - Complete (`now >= endsAt`): if phase is work, write a Session row with `completed = true` and bump `completedWorkInCycle`; pick the next phase (long break when the cycle count reaches the setting, else short break; after any break, work). Post the notification and play the sound.
 - Breaks always start by themselves when work ends. Auto-start only governs whether work begins by itself when the planned break ends.
 - Break overtime: when a break's `endsAt` passes and auto-start is off, the engine stays in the break phase and counts up past zero instead of going idle. The next work session starts when you press Start. At that moment one break Session is written spanning the previous work's `endedAt` to now, whatever the planned break length was.
@@ -120,6 +120,7 @@ Two SwiftData models in a single on-disk store under `~/Library/Application Supp
     var endedAt: Date
     var plannedSeconds: Int     // the interval length when it started
     var completed: Bool         // false = skipped early
+    var pausedSeconds: Int      // time paused during work; 0 for breaks and manual sessions
     var title: String
     var tag: Tag?               // nullify on tag delete
     var isManual: Bool          // true when added or edited by hand
@@ -135,7 +136,7 @@ Two SwiftData models in a single on-disk store under `~/Library/Application Supp
 }
 ```
 
-Derived, never stored: `durationSeconds = endedAt - startedAt`. Stats query `Session` filtered by `phase == .work` and a date range; SwiftData predicates on `startedAt` are enough at a single user's scale (a few thousand rows a year).
+Derived, never stored: `durationSeconds = endedAt - startedAt - pausedSeconds`. Stats query `Session` filtered by `phase == .work` and a date range; SwiftData predicates on `startedAt` are enough at a single user's scale (a few thousand rows a year).
 
 Settings keys in UserDefaults: `workMinutes`, `shortBreakMinutes`, `longBreakMinutes`, `sessionsBeforeLongBreak`, `autoStartNext`, `alertSound`, `alertVolume`, `tickingEnabled`, `appearance`, plus the `TimerSnapshot` from the engine section encoded as JSON.
 
@@ -148,15 +149,15 @@ Stats are computed on demand from work sessions only; nothing is pre-aggregated.
 | Figure | Definition | Shown in |
 | --- | --- | --- |
 | Sessions | Count of work sessions with `completed == true` | Tiles, popover footer, per-tag table |
-| Focus time | Sum of `endedAt - startedAt` over all work sessions, completed or skipped | Tiles, popover footer, per-tag table, 14-day chart |
+| Focus time | Sum of `endedAt - startedAt - pausedSeconds` over all work sessions, completed or skipped | Tiles, popover footer, per-tag table, 14-day chart |
 | Skipped | Count of work sessions with `completed == false` | Per-tag table only |
 | Per day | Focus minutes per calendar day for the last 14 days, zero-filled | 14-day bar chart |
 
 Export writes every session (breaks included) to a location chosen in a save panel. Both formats carry the same columns; timestamps are ISO 8601 with the local offset.
 
 ```csv
-id,phase,started_at,ended_at,planned_seconds,duration_seconds,completed,title,tag,is_manual
-4A1F...,work,2026-11-02T09:00:00-08:00,2026-11-02T09:25:00-08:00,1500,1500,true,Spec review,Deep work,false
+id,phase,started_at,ended_at,planned_seconds,paused_seconds,duration_seconds,completed,title,tag,is_manual
+4A1F...,work,2026-11-02T09:00:00-08:00,2026-11-02T09:25:00-08:00,1500,0,1500,true,Spec review,Deep work,false
 ```
 
 The JSON export is an array of objects with the same keys plus the tag's colour, so the file is enough to rebuild the tag list later if import is ever added.
@@ -216,6 +217,7 @@ All open questions are settled.
 | Menu bar countdown | Always shown, in every phase. |
 | Bundled sounds | Four short alerts (chime, bell, soft click, marimba) plus the system default; a separate soft tick loop. |
 | Minimum macOS | The current release; you will keep the Mac updated. |
+| Paused time | Does not count as focus time. Paused seconds are stored on each work session and subtracted from its duration (decided 2026-11-02). |
 
 ## Working agreement for the implementing session
 

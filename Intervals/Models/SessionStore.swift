@@ -47,6 +47,7 @@ final class SessionStore {
             endedAt: record.endedAt,
             plannedSeconds: record.plannedSeconds,
             completed: record.completed,
+            pausedSeconds: record.pausedSeconds,
             title: record.title.trimmingCharacters(in: .whitespacesAndNewlines),
             tag: tag(id: record.tagID),
             isManual: false,

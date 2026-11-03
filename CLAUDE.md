@@ -47,7 +47,7 @@ IntervalsTests/
 ## Engine notes (choices the spec left open)
 
 - The engine does not settle deadlines in `init`. The app attaches `sessionSink` and `transitionHandler`, then calls `refresh()`, so an interval that ended while the app was closed is recorded instead of lost.
-- `TimerSnapshot` carries `plannedSeconds`, set when an interval starts, so pause/resume cannot change it.
+- `TimerSnapshot` carries `plannedSeconds`, set when an interval starts, so pause/resume cannot change it. It also carries `pausedAt` and `pausedSeconds`: paused time during work is accumulated and written to the session, and never counts as focus time. Breaks accumulate nothing (decided 2026-11-02, see the SPEC Decisions table).
 - Auto-start after a long sleep: work auto-starts at the break's planned end only if that work would still be in progress now. Otherwise the break stays in overtime; the engine never invents sessions nobody was present for.
 - Fresh day: a break in overtime that crosses local midnight is written up to midnight and the engine goes `idle(.work)` with the cycle zeroed. Running work and paused timers are left alone.
 - Pause is a no-op during break overtime; the primary button reads Start there.

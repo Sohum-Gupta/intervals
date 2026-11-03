@@ -26,6 +26,18 @@ struct SessionStoreTests {
         #expect(tag.sessions.count == 1)
     }
 
+    @Test func pausedSecondsAreStoredAndExcludedFromFocusTime() throws {
+        let store = try makeStore()
+        let session = store.record(SessionRecord(
+            phase: .work, startedAt: t0, endedAt: t0.addingTimeInterval(5100), plannedSeconds: 1500,
+            completed: true, title: "", tagID: nil, pausedSeconds: 3600
+        ))
+        #expect(session.pausedSeconds == 3600)
+        #expect(session.durationSeconds == 1500)
+        let summary = store.daySummary(for: t0)
+        #expect(summary.focusSeconds == 1500)
+    }
+
     @Test func unknownTagIDRecordsUntagged() throws {
         let store = try makeStore()
         let session = store.record(SessionRecord(

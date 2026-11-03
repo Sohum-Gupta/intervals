@@ -11,8 +11,11 @@ struct SessionRecord: Equatable, Sendable {
     var completed: Bool
     var title: String
     var tagID: UUID?
+    /// Time spent paused, excluded from focus time. Always 0 for breaks.
+    var pausedSeconds: Int = 0
 
-    var durationSeconds: TimeInterval { endedAt.timeIntervalSince(startedAt) }
+    /// Wall-clock span minus pauses.
+    var durationSeconds: TimeInterval { endedAt.timeIntervalSince(startedAt) - TimeInterval(pausedSeconds) }
 }
 
 /// A phase change the UI may want to announce with a notification or sound.
