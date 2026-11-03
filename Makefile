@@ -34,8 +34,8 @@ install: project    ## Release build copied to /Applications (Spotlight and Rayc
 	touch $(DERIVED)/.metadata_never_index
 	open /Applications/Intervals.app
 
-icon:               ## redraw the app icon into the asset catalog
-	swiftc -O -o build/make_icon Tools/make_icon.swift && build/make_icon Intervals/Resources/Assets.xcassets/AppIcon.appiconset
+icon:               ## redraw the app icon layers inside the Icon Composer package
+	swiftc -O -o build/make_icon Tools/make_icon.swift && build/make_icon Intervals/Resources/AppIcon.icon/Assets
 
 sounds:             ## regenerate the bundled alert sounds
 	python3 Tools/make_sounds.py

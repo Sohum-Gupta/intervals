@@ -1,0 +1,66 @@
+{
+  "fill" : {
+    "automatic-gradient" : "extended-srgb:0.13,0.14,0.16,1.0"
+  },
+  "groups" : [
+    {
+      "name" : "Ring",
+      "lighting" : "individual",
+      "specular" : true,
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      },
+      "layers" : [
+        {
+          "name" : "Track",
+          "image-name" : "track.png",
+          "fill" : { "solid" : "extended-srgb:0.98,0.42,0.40,1.0" },
+          "opacity" : 0.22,
+          "glass" : false
+        },
+        {
+          "name" : "Ring",
+          "image-name" : "ring.png",
+          "fill" : { "solid" : "extended-srgb:0.98,0.42,0.40,1.0" },
+          "glass" : true
+        }
+      ]
+    },
+    {
+      "name" : "Hands",
+      "lighting" : "combined",
+      "specular" : true,
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.6
+      },
+      "translucency" : {
+        "enabled" : false,
+        "value" : 0.0
+      },
+      "layers" : [
+        {
+          "name" : "Hands",
+          "image-name" : "hands.png",
+          "fill" : { "solid" : "extended-srgb:0.96,0.96,0.97,1.0" },
+          "glass" : true
+        },
+        {
+          "name" : "Dot",
+          "image-name" : "dot.png",
+          "fill" : { "solid" : "extended-srgb:0.98,0.42,0.40,1.0" },
+          "glass" : true
+        }
+      ]
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [ "watchOS" ],
+    "squares" : "shared"
+  }
+}

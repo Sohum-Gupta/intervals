@@ -86,7 +86,7 @@ IntervalsTests/
 
 ## Polish notes (Milestone 6)
 
-- App icon: Sohum's direction (2026-11-02) was a minimalist analog clock, modern and stylish, matching the app's UI. `Tools/make_icon.swift` draws it (dark card, accent ring three quarters full, white hands at ten past ten, accent centre dot) at every size into the asset catalog; `make icon` regenerates it. Do not hand-edit the PNGs.
+- App icon: Sohum's direction (2026-11-02) was a minimalist analog clock, modern and stylish, matching the app's UI. It is an Icon Composer package, `Resources/AppIcon.icon`: `icon.json` describes two liquid-glass groups (track + ring in the accent colour, hands + centre dot) over a dark gradient, and `Assets/*.png` are white 1024 px layer shapes drawn by `Tools/make_icon.swift` (`make icon`). actool compiles it into `Assets.car` plus a fallback `AppIcon.icns`; there is no appiconset. Validate a change with `xcrun actool Intervals/Resources/AppIcon.icon --compile <dir> --platform macosx --minimum-deployment-target 26.5 --app-icon AppIcon --output-partial-info-plist <dir>/p.plist`. XcodeGen already treats `.icon` as a `wrapper.icon` file.
 - Appearance (system / light / dark) is applied through `NSApplication.shared.appearance` by `AppController.observeAppearance()`. Use `NSApplication.shared`, not `NSApp`: the controller is created before `NSApp` exists and the test host crashed on it.
 - The Sounds tab shows a "Notifications are off" row with a button to System Settings whenever macOS reports the app as not authorized; it re-checks when the app becomes active.
 - Settings tab order follows the spec: Timer, Sounds, Appearance, Tags, Data.

@@ -19,6 +19,7 @@
 		3598E3CC09C0B2C9E8D8430F /* FocusChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232F57A53B3E4ADF7602460B /* FocusChart.swift */; };
 		3998E31FA78CCD691B279617 /* TimerEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C6A1340ED2C2FBFA1790DB /* TimerEngineTests.swift */; };
 		3F977E875B422650F05759D9 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AA216D2A840677B7023A4D /* SoundPlayer.swift */; };
+		423F9C54CD00679D71CE7531 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = F79685D30DB3322BF6A29AE0 /* AppIcon.icon */; };
 		46433A72AC0C8045552587F0 /* DataSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF9A65F2FDDAE00AC03B573 /* DataSettingsView.swift */; };
 		46DF11A32879E724AFECB400 /* TimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21630F4CC5F42CF5F35CD5 /* TimerState.swift */; };
 		4B5344F1E7BA24E1E84615CE /* Exporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAEBD35C4DEC8344E9DEF8 /* Exporter.swift */; };
@@ -115,6 +116,7 @@
 		EA420BF68EA18EC53D0CAB96 /* SessionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecord.swift; sourceTree = "<group>"; };
 		F512725F7BED6E5271A67A5E /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		F517C972CB1E5156EE9F500E /* IntervalsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntervalsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F79685D30DB3322BF6A29AE0 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		FFCF95E4E6B98F9D5042A6F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,6 +219,7 @@
 		8B4D78FA8B3B7D600EE7613E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F79685D30DB3322BF6A29AE0 /* AppIcon.icon */,
 				FFCF95E4E6B98F9D5042A6F6 /* Assets.xcassets */,
 				11290E1D0BEA16DAD13DFADF /* Sounds */,
 			);
@@ -362,6 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423F9C54CD00679D71CE7531 /* AppIcon.icon in Resources */,
 				CDCCBF2CAD3EA0F1BCAADBA2 /* Assets.xcassets in Resources */,
 				BBAC0805F06ADC169F576FAD /* Bell.aiff in Resources */,
 				867FB4C5A5B19107AA8C319C /* Chime.aiff in Resources */,
