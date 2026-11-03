@@ -43,3 +43,16 @@ IntervalsTests/
 - Polish is part of every milestone: native controls, system fonts, animated state changes, no placeholder UI.
 - A question the spec does not answer gets the simplest reasonable choice, noted in the commit message. Do not stop to ask unless the choice is irreversible.
 - Keep this file and `SPEC.md` current when a decision changes.
+
+## Engine notes (choices the spec left open)
+
+- The engine does not settle deadlines in `init`. The app attaches `sessionSink` and `transitionHandler`, then calls `refresh()`, so an interval that ended while the app was closed is recorded instead of lost.
+- `TimerSnapshot` carries `plannedSeconds`, set when an interval starts, so pause/resume cannot change it.
+- Auto-start after a long sleep: work auto-starts at the break's planned end only if that work would still be in progress now. Otherwise the break stays in overtime; the engine never invents sessions nobody was present for.
+- Fresh day: a break in overtime that crosses local midnight is written up to midnight and the engine goes `idle(.work)` with the cycle zeroed. Running work and paused timers are left alone.
+- Pause is a no-op during break overtime; the primary button reads Start there.
+- `completedWorkInCycle` returns to 0 the moment a long break starts.
+- Reset keeps the current title and tag.
+- The clock protocol is `WallClock` (`SystemClock`, `ManualClock`) because `Clock` collides with the standard library.
+- Sandboxed preferences live in `~/Library/Containers/com.sohum.intervals/Data/Library/Preferences/`; plain `defaults read com.sohum.intervals` shows a different, empty domain.
+
