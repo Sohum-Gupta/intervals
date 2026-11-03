@@ -1,7 +1,7 @@
 import Foundation
 
 /// The three kinds of interval. Stored as its raw string in sessions and snapshots.
-enum Phase: String, Codable, Sendable, CaseIterable, Hashable {
+enum Phase: String, Codable, Sendable {
     case work
     case shortBreak
     case longBreak

@@ -1,6 +1,5 @@
 import AppKit
 import Observation
-import SwiftData
 
 /// Owns the engine, settings and side effects for the lifetime of the app.
 @MainActor

@@ -26,8 +26,4 @@ final class ManualClock: WallClock, @unchecked Sendable {
     func advance(_ seconds: TimeInterval) {
         lock.withLock { current = current.addingTimeInterval(seconds) }
     }
-
-    func set(_ date: Date) {
-        lock.withLock { current = date }
-    }
 }

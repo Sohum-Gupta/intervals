@@ -51,7 +51,6 @@ enum Stats {
         struct Interval: Equatable, Sendable {
             var start: Date
             var end: Date
-            func contains(_ date: Date) -> Bool { date >= start && date < end }
         }
     }
 

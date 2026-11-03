@@ -214,11 +214,6 @@ final class TimerEngine {
         ticker = timer
     }
 
-    func stopTicking() {
-        ticker?.invalidate()
-        ticker = nil
-    }
-
     // MARK: - State machine
 
     private func evaluate() {

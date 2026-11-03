@@ -1,4 +1,3 @@
-import SwiftData
 import SwiftUI
 
 /// The list shared by Today and History: rows, day sections, inline editing,

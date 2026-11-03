@@ -1,4 +1,3 @@
-import SwiftData
 import SwiftUI
 
 /// Three summary tiles, the 14-day chart, and a per-tag table for the

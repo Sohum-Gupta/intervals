@@ -48,10 +48,7 @@ final class Session {
         self.createdAt = createdAt
     }
 
-    var phase: Phase {
-        get { Phase(rawValue: phaseRaw) ?? .work }
-        set { phaseRaw = newValue.rawValue }
-    }
+    var phase: Phase { Phase(rawValue: phaseRaw) ?? .work }
 
     /// Wall-clock span minus pauses. This is what focus time sums.
     var durationSeconds: TimeInterval { max(0, endedAt.timeIntervalSince(startedAt) - TimeInterval(pausedSeconds)) }

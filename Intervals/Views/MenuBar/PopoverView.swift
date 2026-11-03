@@ -1,4 +1,3 @@
-import SwiftData
 import SwiftUI
 
 /// The card under the menu bar item: ring, session dots, title, controls, footer.
