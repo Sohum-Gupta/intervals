@@ -110,6 +110,22 @@ final class SessionStore {
         return (completed, Int(seconds))
     }
 
+    /// Work sessions that started in `[start, end)`, oldest first.
+    func workSessions(from start: Date, to end: Date) -> [Session] {
+        let work = Phase.work.rawValue
+        let descriptor = FetchDescriptor<Session>(
+            predicate: #Predicate { $0.phaseRaw == work && $0.startedAt >= start && $0.startedAt < end },
+            sortBy: [SortDescriptor(\.startedAt)]
+        )
+        return (try? context.fetch(descriptor)) ?? []
+    }
+
+    /// Every session, oldest first, for export.
+    func allSessions() -> [Session] {
+        let descriptor = FetchDescriptor<Session>(sortBy: [SortDescriptor(\.startedAt)])
+        return (try? context.fetch(descriptor)) ?? []
+    }
+
     // MARK: Tags
 
     func tags() -> [Tag] {

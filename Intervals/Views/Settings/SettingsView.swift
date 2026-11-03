@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum SettingsTab: String, CaseIterable {
-    case timer, sounds, tags
+    case timer, sounds, tags, data
 }
 
 /// The standard Settings window (⌘,). Tabs arrive as their milestones do.
@@ -18,6 +18,9 @@ struct SettingsView: View {
             }
             Tab("Tags", systemImage: "tag", value: SettingsTab.tags) {
                 TagSettingsView(controller: controller)
+            }
+            Tab("Data", systemImage: "externaldrive", value: SettingsTab.data) {
+                DataSettingsView(controller: controller)
             }
         }
         .scenePadding()

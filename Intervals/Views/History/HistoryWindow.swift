@@ -23,41 +23,50 @@ struct HistoryWindow: View {
                 DayList(controller: controller, dayStart: Calendar.current.startOfDay(for: controller.engine.now))
                     .navigationTitle("Today")
             case .history:
-                RangeList(
-                    controller: controller,
-                    start: history.rangeStart,
-                    end: history.rangeEnd,
-                    tagFilter: history.tagFilter
-                )
+                VStack(spacing: 0) {
+                    filterBar
+                    Divider()
+                    RangeList(
+                        controller: controller,
+                        start: history.rangeStart,
+                        end: history.rangeEnd,
+                        tagFilter: history.tagFilter
+                    )
+                }
                 .navigationTitle("History")
+            case .stats:
+                StatsView(controller: controller)
+                    .navigationTitle("Stats")
             }
         }
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 if history.section == .history {
-                    rangeControls
-                    tagFilterMenu
+                    exportMenu
                 }
-                Toggle(isOn: $history.showBreaks) {
-                    Label("Show breaks", systemImage: "cup.and.saucer")
+                if history.section != .stats {
+                    Toggle(isOn: $history.showBreaks) {
+                        Label("Show breaks", systemImage: "cup.and.saucer")
+                    }
+                    .help("Show breaks")
+                    Button {
+                        addSession()
+                    } label: {
+                        Label("Add session", systemImage: "plus")
+                    }
+                    .keyboardShortcut("n")
+                    .help("Add a session by hand (⌘N)")
                 }
-                .help("Show breaks")
-                Button {
-                    addSession()
-                } label: {
-                    Label("Add session", systemImage: "plus")
-                }
-                .keyboardShortcut("n")
-                .help("Add a session by hand (⌘N)")
             }
         }
         .frame(minWidth: 640, minHeight: 400)
         .onDisappear { history.commitPendingDeletion() }
     }
 
-    private var rangeControls: some View {
+    /// Range presets, from/to fields and the tag filter, in one row above the list.
+    private var filterBar: some View {
         @Bindable var history = history
-        return HStack(spacing: 6) {
+        return HStack(spacing: 10) {
             Menu {
                 ForEach(HistoryState.RangePreset.allCases) { preset in
                     Button(preset.rawValue) { history.applyPreset(preset) }
@@ -65,6 +74,7 @@ struct HistoryWindow: View {
             } label: {
                 Label("Range", systemImage: "calendar")
             }
+            .fixedSize()
             .help("Date range presets")
             DatePicker("From", selection: $history.rangeStart, in: ...history.rangeEnd, displayedComponents: .date)
                 .labelsHidden()
@@ -75,7 +85,27 @@ struct HistoryWindow: View {
                 .labelsHidden()
                 .datePickerStyle(.field)
                 .help("To")
+            Spacer()
+            tagFilterMenu
+                .fixedSize()
         }
+        .controlSize(.small)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(.bar)
+    }
+
+    private var exportMenu: some View {
+        Menu {
+            ForEach(Exporter.Format.allCases) { format in
+                Button("Export as \(format.rawValue)…") {
+                    ExportPanel.run(format: format, store: controller.store)
+                }
+            }
+        } label: {
+            Label("Export…", systemImage: "square.and.arrow.up")
+        }
+        .help("Export all sessions")
     }
 
     private var tagFilterMenu: some View {

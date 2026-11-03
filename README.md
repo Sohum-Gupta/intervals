@@ -52,7 +52,7 @@ Gatekeeper; building from source is the supported path.
 | 2 | Menu bar countdown, popover, notifications, sounds | yes |
 | 3 | Session history and tags in SwiftData | yes |
 | 4 | History window with editing | yes |
-| 5 | Stats and CSV/JSON export | |
+| 5 | Stats and CSV/JSON export | yes |
 | 6 | Appearance setting and polish pass | |
 
 ## License

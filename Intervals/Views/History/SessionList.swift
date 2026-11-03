@@ -53,6 +53,12 @@ struct SessionList: View {
         }
         .listStyle(.inset(alternatesRowBackgrounds: true))
         .onDeleteCommand(perform: deleteSelected)
+        .onKeyPress(.delete) { deleteSelected(); return .handled }
+        .onKeyPress(.return) {
+            guard let selection, let session = visible.first(where: { $0.id == selection }), history.editingID == nil else { return .ignored }
+            beginEditing(session)
+            return .handled
+        }
     }
 
     @ViewBuilder
@@ -64,7 +70,7 @@ struct SessionList: View {
                 } else {
                     SessionRow(session: session)
                         .contentShape(Rectangle())
-                        .onTapGesture(count: 2) { beginEditing(session) }
+                        .simultaneousGesture(TapGesture(count: 2).onEnded { beginEditing(session) })
                         .contextMenu {
                             Button("Edit") { beginEditing(session) }
                             Divider()
@@ -154,8 +160,10 @@ struct SessionRow: View {
         HStack(spacing: 12) {
             Text(timeRange)
                 .monospacedDigit()
+                .lineLimit(1)
+                .fixedSize()
                 .foregroundStyle(session.phase.isBreak ? .tertiary : .secondary)
-                .frame(width: 128, alignment: .leading)
+                .frame(width: 150, alignment: .leading)
             Text(TimeFormat.duration(Int(session.durationSeconds)))
                 .monospacedDigit()
                 .frame(width: 52, alignment: .trailing)

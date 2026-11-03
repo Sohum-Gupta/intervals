@@ -6,10 +6,22 @@ import Observation
 @Observable
 final class HistoryState {
     enum Section: String, CaseIterable, Identifiable {
-        case today, history
+        case today, history, stats
         var id: String { rawValue }
-        var title: String { self == .today ? "Today" : "History" }
-        var symbol: String { self == .today ? "sun.max" : "calendar" }
+        var title: String {
+            switch self {
+            case .today: "Today"
+            case .history: "History"
+            case .stats: "Stats"
+            }
+        }
+        var symbol: String {
+            switch self {
+            case .today: "sun.max"
+            case .history: "calendar"
+            case .stats: "chart.bar"
+            }
+        }
     }
 
     enum TagFilter: Hashable {

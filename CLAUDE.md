@@ -87,3 +87,12 @@ IntervalsTests/
 
 Sohum's direction (2026-11-02): a minimalist analog clock, modern and stylish, without much detail, visually in step with the app's UI (the accent ring, rounded type, dark card). Build it from the ring and dot language already used in the popover.
 
+## Stats and export notes (Milestone 5)
+
+- `Stats` is pure functions over `[Session]`; `SessionStore.workSessions(from:to:)` supplies the range. `StatsView` reads `store.changeCount` so it recomputes after every write.
+- Clicking a summary tile selects the range for the per-tag table. "This week" and "This month" follow `Calendar.current` (locale first weekday).
+- The 14-day chart is one series in the accent colour, so it has no legend; hover shows a tooltip. Y-axis ticks are explicit round minutes (`FocusChart.tickMinutes`) because automatic ticks produced labels like "2h" for 100 minutes.
+- `Exporter` writes CSV and JSON with the spec columns plus `paused_seconds`; timestamps use the local offset and the file name uses the local date. Export lives in the History toolbar and the Settings Data tab; both go through `ExportPanel` (an `NSSavePanel`).
+- Seeding test rows with `sqlite3`: `ZID` must be a 16-byte blob (`randomblob(16)`), not text, or reading `Session.id` crashes with a dynamic-cast failure.
+- UI automation cannot verify keyboard focus in the History list while VS Code is frontmost; the list has `onDeleteCommand`, `onKeyPress(.delete)` and `onKeyPress(.return)`, and the row's double-click is a `simultaneousGesture` so it does not steal selection focus.
+
