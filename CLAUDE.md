@@ -67,3 +67,12 @@ IntervalsTests/
 - **Notifications need a real signing identity and a manual switch on this Mac.** The project signs with the Apple Development certificate for team `SQH2L2PNM9` (set in `project.yml`). Ad-hoc builds get "Notifications are not allowed for this application". Even signed, this Mac never showed the permission prompt and the daemon reported the app as Denied; the fix was turning Intervals on by hand in System Settings > Notifications (done 2026-11-02). The authorization request logs its result under subsystem `com.sohum.intervals`, category `notifications`.
 - Hand-testing: Screen Recording and Accessibility are granted to VS Code. `screencapture -R x,y,w,h` takes points (screen is 1512 pt wide); System Events can click `button N of group 1 of window 1` in the popover; `tell application "Intervals" to activate` brings the Settings window forward. zsh has a builtin `log`, so use `/usr/bin/log show` and `/usr/bin/log stream` for the unified log.
 
+## Data notes (Milestone 3)
+
+- `SessionStore` owns the `ModelContainer` and every write. Views read with `@Query`; the engine's `sessionSink` and the Settings tabs write through the store. It bumps `changeCount` after each write so views that fetch by hand (the popover footer) can refresh.
+- `Session.phase` is stored as `phaseRaw: String` so `#Predicate` can filter on it.
+- Tag names are unique ignoring case and whitespace; `addTag`/`rename` refuse duplicates instead of renaming around them. New tags take the least-used palette colour. There are no seeded tags.
+- Tag colours in menus must be drawn as non-template `NSImage`s (`TagColor.dot`); SF Symbols tinted with `foregroundStyle` come out white inside `Menu`.
+- The store file is `~/Library/Containers/com.sohum.intervals/Data/Library/Application Support/Intervals/Intervals.store`; `sqlite3 "file:...?mode=ro"` on it is a handy check (`ZSESSION`, `ZTAG`).
+- If the on-disk store fails to open, the app falls back to an in-memory store so the timer still works; the file is left untouched.
+

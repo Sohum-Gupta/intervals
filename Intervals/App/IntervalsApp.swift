@@ -12,9 +12,11 @@ struct IntervalsApp: App {
             MenuBarLabel(engine: controller.engine)
         }
         .menuBarExtraStyle(.window)
+        .modelContainer(controller.store.container)
 
         Settings {
             SettingsView(controller: controller)
         }
+        .modelContainer(controller.store.container)
     }
 }

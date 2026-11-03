@@ -1,5 +1,6 @@
 import AppKit
 import Observation
+import SwiftData
 
 /// Owns the engine, settings and side effects for the lifetime of the app.
 @MainActor
@@ -9,17 +10,30 @@ final class AppController {
 
     let settings: AppSettings
     let engine: TimerEngine
+    let store: SessionStore
     @ObservationIgnored let sounds = SoundPlayer()
     @ObservationIgnored let notifier = Notifier()
+
+    /// Which Settings tab to show when the window opens next.
+    var settingsTab: SettingsTab = .timer
 
     private init() {
         let settings = AppSettings()
         let engine = TimerEngine(settings: settings.timer)
+        let store: SessionStore
+        do {
+            store = SessionStore(container: try SessionStore.makeContainer())
+        } catch {
+            // The on-disk store is unusable; keep the timer working in memory
+            // rather than refusing to launch. The data is still on disk.
+            store = SessionStore(container: try! SessionStore.makeContainer(inMemory: true))
+        }
         self.settings = settings
         self.engine = engine
+        self.store = store
 
         settings.onTimerChange = { engine.settings = $0 }
-        engine.sessionSink = { _ in }   // Milestone 3 writes these to the store.
+        engine.sessionSink = { store.record($0) }
         engine.transitionHandler = { [weak self] transition in
             self?.handle(transition)
         }
@@ -32,6 +46,12 @@ final class AppController {
 
     func quit() {
         NSApplication.shared.terminate(nil)
+    }
+
+    /// Remove a tag everywhere, including from the interval in progress.
+    func delete(_ tag: Tag) {
+        if engine.currentTagID == tag.id { engine.currentTagID = nil }
+        store.delete(tag)
     }
 
     private func handle(_ transition: TimerTransition) {

@@ -1,3 +1,4 @@
+import SwiftData
 import SwiftUI
 
 /// The card under the menu bar item: ring, session dots, title, controls, footer.
@@ -78,20 +79,24 @@ struct PopoverView: View {
         .accessibilityLabel("\(done) of \(total) sessions before the long break")
     }
 
-    // MARK: Title
+    // MARK: Title and tag
 
     private var titleField: some View {
-        TextField("What are you working on?", text: Binding(
-            get: { engine.currentTitle },
-            set: { engine.currentTitle = $0 }
-        ))
-        .textFieldStyle(.plain)
-        .font(.body)
-        .padding(.horizontal, 10)
-        .padding(.vertical, 7)
-        .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-        .focused($titleFocused)
-        .onSubmit { titleFocused = false }
+        HStack(spacing: 8) {
+            TextField("What are you working on?", text: Binding(
+                get: { engine.currentTitle },
+                set: { engine.currentTitle = $0 }
+            ))
+            .textFieldStyle(.plain)
+            .font(.body)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 7)
+            .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .focused($titleFocused)
+            .onSubmit { titleFocused = false }
+
+            TagPicker(controller: controller)
+        }
     }
 
     // MARK: Controls
@@ -144,9 +149,7 @@ struct PopoverView: View {
 
     private var footer: some View {
         HStack {
-            Text("Intervals")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            TodaySummary(controller: controller)
             Spacer()
             Menu {
                 Button("Settings…") { showSettings() }
@@ -170,5 +173,31 @@ struct PopoverView: View {
     private func showSettings() {
         NSApp.activate()
         openSettings()
+    }
+}
+
+/// "3 sessions · 1h 15m" for today, refreshed after every write and at midnight.
+private struct TodaySummary: View {
+    let controller: AppController
+    @State private var text = ""
+
+    private var dayStart: Date { Calendar.current.startOfDay(for: controller.engine.now) }
+
+    var body: some View {
+        Text(text)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .monospacedDigit()
+            .contentTransition(.numericText())
+            .onAppear(perform: refresh)
+            .onChange(of: controller.store.changeCount) { refresh() }
+            .onChange(of: dayStart) { refresh() }
+    }
+
+    private func refresh() {
+        let summary = controller.store.daySummary(for: controller.engine.now)
+        text = summary.sessions == 0 && summary.focusSeconds == 0
+            ? "No focus yet today"
+            : TimeFormat.summary(sessions: summary.sessions, focusSeconds: summary.focusSeconds)
     }
 }

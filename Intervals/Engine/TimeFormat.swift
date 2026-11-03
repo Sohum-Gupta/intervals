@@ -15,4 +15,20 @@ enum TimeFormat {
         }
         return String(format: "%@%02d:%02d", sign, minutes, secs)
     }
+
+    /// `1h 15m`, `45m`, or `0m`, for totals.
+    static func duration(_ seconds: Int) -> String {
+        let minutes = max(seconds, 0) / 60
+        let hours = minutes / 60
+        if hours > 0 {
+            return "\(hours)h \(minutes % 60)m"
+        }
+        return "\(minutes)m"
+    }
+
+    /// `3 sessions · 1h 15m`
+    static func summary(sessions: Int, focusSeconds: Int) -> String {
+        let noun = sessions == 1 ? "session" : "sessions"
+        return "\(sessions) \(noun) · \(duration(focusSeconds))"
+    }
 }

@@ -10,12 +10,14 @@
 		01C166094862CA40A03FB7FC /* TimeFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DEB3B46224AE4A9FF4C5BF /* TimeFormatTests.swift */; };
 		094A7079E514B68275B8A743 /* TimerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9210F024EA149EA200257E97 /* TimerSettingsView.swift */; };
 		096F439EC6A49180BCBB1C93 /* Marimba.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5309B68AC1246CC6FC64203D /* Marimba.aiff */; };
+		0D836A388C7C69F349886821 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF7F4C77427F17EFE1CAC6 /* Tag.swift */; };
 		1C622495CBCD080A01208B97 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BEE23DD5767ACAEFAF0996 /* AppController.swift */; };
 		245524CE999582320BA4A81E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEBAC86D1E1CDD58E974106 /* SettingsView.swift */; };
 		2E1173E066377230619229A0 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B830A61952455463F4D205CE /* AppSettings.swift */; };
 		3998E31FA78CCD691B279617 /* TimerEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C6A1340ED2C2FBFA1790DB /* TimerEngineTests.swift */; };
 		3F977E875B422650F05759D9 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AA216D2A840677B7023A4D /* SoundPlayer.swift */; };
 		46DF11A32879E724AFECB400 /* TimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21630F4CC5F42CF5F35CD5 /* TimerState.swift */; };
+		52EBD46AAE6FBD53956F79F1 /* TagColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A236CF1D3D7EEBFA5D74F /* TagColor.swift */; };
 		560E5554B7537666ED0ABD7A /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E350B91D0A9C44BE768D48 /* PopoverView.swift */; };
 		7094CB18AE6FB4B387C22A3B /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA420BF68EA18EC53D0CAB96 /* SessionRecord.swift */; };
 		7128072A06D66171A928AFA4 /* IntervalsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441928E21B5D9726835DB99B /* IntervalsApp.swift */; };
@@ -25,12 +27,17 @@
 		867FB4C5A5B19107AA8C319C /* Chime.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 281617D39D7DA062A86E9CC1 /* Chime.aiff */; };
 		8ADAB84E9187EC0E7C573D4D /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512725F7BED6E5271A67A5E /* Clock.swift */; };
 		AAF588F662BC39D4B003A35B /* Phase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AE6069760323AAC085DB48 /* Phase.swift */; };
+		AD0858D3955902B768CFD490 /* TagPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBBF837A71964CF0B1F76F2 /* TagPicker.swift */; };
 		BBAC0805F06ADC169F576FAD /* Bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 23D24811DBDD1C89041ECFAD /* Bell.aiff */; };
+		BEF4A10DB670270B1AB95CA4 /* SessionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F2157E575CC52C0F385430 /* SessionStoreTests.swift */; };
 		C2C0869DF0E8C5E09177D7A2 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334C57151DA69B5D1EED8DCB /* Notifier.swift */; };
 		C3DCCFB7C019315629FC8A8B /* MenuBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3479D45AC2B703323E705188 /* MenuBarLabel.swift */; };
 		C52343613FAAA6F853EB9D85 /* SoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E02A38AE86D71022A49DD /* SoundSettingsView.swift */; };
+		CCB09BF30F6A001777DF91FD /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33571F28B6F94757721FE7 /* Session.swift */; };
+		CD674FC11284CF9FE9F2254F /* TagSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BFC97A72D17AF6308CDF84 /* TagSettingsView.swift */; };
 		CDCCBF2CAD3EA0F1BCAADBA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFCF95E4E6B98F9D5042A6F6 /* Assets.xcassets */; };
 		D7A933E38ADC111718065FD9 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D118EE668A08D325AE6477D /* RingView.swift */; };
+		DBBA00563FC181EA3362BF97 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEEE847F8A3F640920F8CE6 /* SessionStore.swift */; };
 		EF0A0DB6446E9CA529741DE9 /* TimerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748CF90854C10FED269EAECD /* TimerSettings.swift */; };
 		F054F54F84BB904A0D1D2E76 /* TimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832DCAC67E05CD646C732839 /* TimeFormat.swift */; };
 		FEABB8DDB285DA3ABF66951A /* SoftClick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8E5170AD020E5C64FE23500C /* SoftClick.aiff */; };
@@ -55,13 +62,16 @@
 		3479D45AC2B703323E705188 /* MenuBarLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLabel.swift; sourceTree = "<group>"; };
 		347B1B2E1C2E9F59C6BB6C66 /* Tick.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Tick.aiff; sourceTree = "<group>"; };
 		441928E21B5D9726835DB99B /* IntervalsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalsApp.swift; sourceTree = "<group>"; };
+		469A236CF1D3D7EEBFA5D74F /* TagColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagColor.swift; sourceTree = "<group>"; };
 		501498514A49DC4C9CBCDE5C /* Intervals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intervals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51AE6069760323AAC085DB48 /* Phase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phase.swift; sourceTree = "<group>"; };
 		5309B68AC1246CC6FC64203D /* Marimba.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Marimba.aiff; sourceTree = "<group>"; };
+		5D33571F28B6F94757721FE7 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		63E350B91D0A9C44BE768D48 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		6EEBAC86D1E1CDD58E974106 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		70DEB3B46224AE4A9FF4C5BF /* TimeFormatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatTests.swift; sourceTree = "<group>"; };
 		748CF90854C10FED269EAECD /* TimerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSettings.swift; sourceTree = "<group>"; };
+		76BFC97A72D17AF6308CDF84 /* TagSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSettingsView.swift; sourceTree = "<group>"; };
 		792E02A38AE86D71022A49DD /* SoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsView.swift; sourceTree = "<group>"; };
 		7D118EE668A08D325AE6477D /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
 		7EDC57D00BA64030F082362F /* Intervals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Intervals.entitlements; sourceTree = "<group>"; };
@@ -71,9 +81,13 @@
 		AAFF3253D2CE30A8BBE13892 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B7AA216D2A840677B7023A4D /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		B830A61952455463F4D205CE /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		C4CF7F4C77427F17EFE1CAC6 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		C9C6A1340ED2C2FBFA1790DB /* TimerEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngineTests.swift; sourceTree = "<group>"; };
+		CFBBF837A71964CF0B1F76F2 /* TagPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPicker.swift; sourceTree = "<group>"; };
 		DC21630F4CC5F42CF5F35CD5 /* TimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerState.swift; sourceTree = "<group>"; };
+		DDEEE847F8A3F640920F8CE6 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		DE72E6DAA618E99F733C4ADE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E9F2157E575CC52C0F385430 /* SessionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStoreTests.swift; sourceTree = "<group>"; };
 		EA420BF68EA18EC53D0CAB96 /* SessionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecord.swift; sourceTree = "<group>"; };
 		F512725F7BED6E5271A67A5E /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		F517C972CB1E5156EE9F500E /* IntervalsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntervalsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +132,7 @@
 			children = (
 				6EEBAC86D1E1CDD58E974106 /* SettingsView.swift */,
 				792E02A38AE86D71022A49DD /* SoundSettingsView.swift */,
+				76BFC97A72D17AF6308CDF84 /* TagSettingsView.swift */,
 				9210F024EA149EA200257E97 /* TimerSettingsView.swift */,
 			);
 			path = Settings;
@@ -129,6 +144,7 @@
 				3479D45AC2B703323E705188 /* MenuBarLabel.swift */,
 				63E350B91D0A9C44BE768D48 /* PopoverView.swift */,
 				7D118EE668A08D325AE6477D /* RingView.swift */,
+				CFBBF837A71964CF0B1F76F2 /* TagPicker.swift */,
 			);
 			path = MenuBar;
 			sourceTree = "<group>";
@@ -160,6 +176,10 @@
 			isa = PBXGroup;
 			children = (
 				51AE6069760323AAC085DB48 /* Phase.swift */,
+				5D33571F28B6F94757721FE7 /* Session.swift */,
+				DDEEE847F8A3F640920F8CE6 /* SessionStore.swift */,
+				C4CF7F4C77427F17EFE1CAC6 /* Tag.swift */,
+				469A236CF1D3D7EEBFA5D74F /* TagColor.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -205,6 +225,7 @@
 		CB5CF1257A1C0CB6598FCE39 /* IntervalsTests */ = {
 			isa = PBXGroup;
 			children = (
+				E9F2157E575CC52C0F385430 /* SessionStoreTests.swift */,
 				70DEB3B46224AE4A9FF4C5BF /* TimeFormatTests.swift */,
 				C9C6A1340ED2C2FBFA1790DB /* TimerEngineTests.swift */,
 			);
@@ -321,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEF4A10DB670270B1AB95CA4 /* SessionStoreTests.swift in Sources */,
 				01C166094862CA40A03FB7FC /* TimeFormatTests.swift in Sources */,
 				3998E31FA78CCD691B279617 /* TimerEngineTests.swift in Sources */,
 			);
@@ -340,10 +362,16 @@
 				AAF588F662BC39D4B003A35B /* Phase.swift in Sources */,
 				560E5554B7537666ED0ABD7A /* PopoverView.swift in Sources */,
 				D7A933E38ADC111718065FD9 /* RingView.swift in Sources */,
+				CCB09BF30F6A001777DF91FD /* Session.swift in Sources */,
 				7094CB18AE6FB4B387C22A3B /* SessionRecord.swift in Sources */,
+				DBBA00563FC181EA3362BF97 /* SessionStore.swift in Sources */,
 				245524CE999582320BA4A81E /* SettingsView.swift in Sources */,
 				3F977E875B422650F05759D9 /* SoundPlayer.swift in Sources */,
 				C52343613FAAA6F853EB9D85 /* SoundSettingsView.swift in Sources */,
+				0D836A388C7C69F349886821 /* Tag.swift in Sources */,
+				52EBD46AAE6FBD53956F79F1 /* TagColor.swift in Sources */,
+				AD0858D3955902B768CFD490 /* TagPicker.swift in Sources */,
+				CD674FC11284CF9FE9F2254F /* TagSettingsView.swift in Sources */,
 				F054F54F84BB904A0D1D2E76 /* TimeFormat.swift in Sources */,
 				8186DF1BB1AC75A36CE300BA /* TimerEngine.swift in Sources */,
 				EF0A0DB6446E9CA529741DE9 /* TimerSettings.swift in Sources */,
