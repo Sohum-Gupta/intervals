@@ -15,11 +15,14 @@ A native macOS menu bar Pomodoro timer for one user. No paywall, no sync, no net
 
 ## Commands
 
-- Build: `xcodebuild -scheme Intervals -configuration Debug build`
-- Test: `xcodebuild -scheme Intervals test`
-- Run: `open build/Debug/Intervals.app` after a build, or `xcodebuild ... && open` — the app lives in the menu bar, not the Dock.
+The project file is generated: edit `project.yml`, never `Intervals.xcodeproj` by hand. Xcode is not the active developer directory on this Mac, so the Makefile pins `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
 
-Treat warnings as failures. Run the tests before every commit.
+- Regenerate project: `make project` (runs `xcodegen generate`)
+- Build: `make build` (`xcodebuild -scheme Intervals -configuration Debug -derivedDataPath build/DerivedData build`)
+- Test: `make test` (`xcodebuild -scheme Intervals test`, same derived data path)
+- Run: `make run` — kills any running copy and opens `build/DerivedData/Build/Products/Debug/Intervals.app`. The app lives in the menu bar, not the Dock.
+
+Treat warnings as failures (the project sets `SWIFT_TREAT_WARNINGS_AS_ERRORS`). Run the tests before every commit.
 
 ## Layout
 
