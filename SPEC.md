@@ -221,7 +221,7 @@ All open questions are settled.
 
 This spec is the source of truth. The coding session in VS Code works through the build order above, one milestone at a time, and does not add features outside the Features table.
 
-- Repo: a new private GitHub repo `intervals`, created with `gh repo create` on first run. `SPEC.md` (this document) and `CLAUDE.md` live at the root. Commit at the end of every milestone with a message naming it (`Milestone 1: timer engine and tests`).
+- Repo: the GitHub repo `intervals`, created with `gh repo create` on first run. Made public on 2026-11-02 with an MIT license; anyone on the same macOS and Xcode versions can build and run it from source, and no other setup is supported. `SPEC.md` (this document) and `CLAUDE.md` live at the root. Commit at the end of every milestone with a message naming it (`Milestone 1: timer engine and tests`).
 - Toolchain: latest Xcode on the Mac, Swift 6 strict concurrency, deployment target = the macOS version the Mac is running. No third-party packages. Build and test from the terminal with `xcodebuild -scheme Intervals test` so the session can verify its own work; open Xcode only for things the CLI cannot do (signing, asset catalog edits if needed).
 - Project file: generate it with Xcode once (`File > New > Project > macOS App`, SwiftUI, SwiftData, name `Intervals`, bundle id `com.sohum.intervals`), commit it, then let the session edit sources. If the session can create the project itself with a tool like XcodeGen or a hand-written `project.pbxproj`, that is fine too, as long as `xcodebuild` works.
 - Definition of done per milestone: it builds with no warnings, its tests pass, the app launches and the milestone's features work when tried by hand, and the commit is pushed.
