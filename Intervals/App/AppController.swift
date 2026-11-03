@@ -23,6 +23,8 @@ final class AppController {
         engine.transitionHandler = { [weak self] transition in
             self?.handle(transition)
         }
+        // Ask for notification permission before the first refresh can post one.
+        notifier.requestAuthorization()
         engine.refresh()
         engine.startTicking()
         observeTicking()
