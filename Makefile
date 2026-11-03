@@ -6,12 +6,13 @@ DERIVED = build/DerivedData
 XCB = xcodebuild -scheme Intervals -derivedDataPath $(DERIVED) -destination 'platform=macOS'
 QUIET = 2>&1 | grep -vE 'linkd|appintentsmetadata|^builtin|^ {4}|^$$' | grep -E 'error:|error|warning:|✔|✘|Executed|\*\*|Suite|Test run'
 
-.PHONY: project build test run clean icon sounds
+.PHONY: project build test run clean icon sounds install
 
 project:            ## regenerate Intervals.xcodeproj from project.yml
 	xcodegen generate
 
 build: project      ## Debug build, warnings are errors
+	mkdir -p $(DERIVED) && touch $(DERIVED)/.metadata_never_index
 	set -o pipefail; $(XCB) -configuration Debug build $(QUIET)
 
 test: project       ## run unit tests
@@ -23,6 +24,15 @@ run: build          ## launch the menu bar app
 
 clean:
 	rm -rf build
+
+install: project    ## Release build copied to /Applications (Spotlight and Raycast find it there)
+	set -o pipefail; $(XCB) -configuration Release build $(QUIET)
+	pkill -x Intervals || true
+	rm -rf /Applications/Intervals.app
+	cp -R $(DERIVED)/Build/Products/Release/Intervals.app /Applications/Intervals.app
+	/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f /Applications/Intervals.app
+	touch $(DERIVED)/.metadata_never_index
+	open /Applications/Intervals.app
 
 icon:               ## redraw the app icon into the asset catalog
 	swiftc -O -o build/make_icon Tools/make_icon.swift && build/make_icon Intervals/Resources/Assets.xcassets/AppIcon.appiconset

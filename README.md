@@ -26,6 +26,7 @@ copy, and opens it. The app lives in the menu bar, not the Dock. Look for a
 small circle near the clock. Other targets:
 
 ```sh
+make install # Release build into /Applications, so Spotlight and Raycast can launch it
 make build   # build only, warnings are errors
 make test    # run the unit tests
 make clean   # delete the build folder

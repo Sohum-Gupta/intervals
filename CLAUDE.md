@@ -21,6 +21,7 @@ The project file is generated: edit `project.yml`, never `Intervals.xcodeproj` b
 - Build: `make build` (`xcodebuild -scheme Intervals -configuration Debug -derivedDataPath build/DerivedData build`)
 - Test: `make test` (`xcodebuild -scheme Intervals test`, same derived data path)
 - Run: `make run` — kills any running copy and opens `build/DerivedData/Build/Products/Debug/Intervals.app`. The app lives in the menu bar, not the Dock.
+- Install: `make install` — Release build copied to `/Applications/Intervals.app` and registered with LaunchServices, so Spotlight and Raycast launch that copy. Re-run it after changes you want in daily use; `make run` only refreshes the Debug copy.
 
 Treat warnings as failures (the project sets `SWIFT_TREAT_WARNINGS_AS_ERRORS`). Run the tests before every commit.
 
