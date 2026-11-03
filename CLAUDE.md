@@ -76,3 +76,14 @@ IntervalsTests/
 - The store file is `~/Library/Containers/com.sohum.intervals/Data/Library/Application Support/Intervals/Intervals.store`; `sqlite3 "file:...?mode=ro"` on it is a handy check (`ZSESSION`, `ZTAG`).
 - If the on-disk store fails to open, the app falls back to an in-memory store so the timer still works; the file is left untouched.
 
+## History notes (Milestone 4)
+
+- `HistoryState` (owned by `AppController`) holds the window's section, filters, inline-edit target and the one pending deletion. Delete hides the row at once and hard-deletes when the six-second toast expires, on Undo it is restored, deleting another row commits the first, and closing the window commits any pending one.
+- Editing is inline: double-click (or the context menu) swaps the row for `SessionEditor`; Return/Done commits through `SessionStore.update`, which marks the session manual. Cancel on a session just added with ⌘N deletes it again.
+- `@Query` predicates are built in the list views' initialisers from `HistoryState`, so changing a filter recreates the query.
+- Accessibility path to the detail list, for scripted tests: `outline 1 of scroll area 1 of group 2 of splitter group 1 of group 1 of window "Today"`. Avoid `click at {x,y}`; it lands on whatever Space is in front.
+
+## App icon (Milestone 6)
+
+Sohum's direction (2026-11-02): a minimalist analog clock, modern and stylish, without much detail, visually in step with the app's UI (the accent ring, rounded type, dark card). Build it from the ring and dot language already used in the popover.
+

@@ -26,6 +26,7 @@
 		8186DF1BB1AC75A36CE300BA /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F276538DCA55609047A52DF /* TimerEngine.swift */; };
 		867FB4C5A5B19107AA8C319C /* Chime.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 281617D39D7DA062A86E9CC1 /* Chime.aiff */; };
 		8ADAB84E9187EC0E7C573D4D /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512725F7BED6E5271A67A5E /* Clock.swift */; };
+		9DAEBA885147C42EAC486A26 /* SessionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B6108D789B07CD9CBE265 /* SessionList.swift */; };
 		AAF588F662BC39D4B003A35B /* Phase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AE6069760323AAC085DB48 /* Phase.swift */; };
 		AD0858D3955902B768CFD490 /* TagPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBBF837A71964CF0B1F76F2 /* TagPicker.swift */; };
 		BBAC0805F06ADC169F576FAD /* Bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 23D24811DBDD1C89041ECFAD /* Bell.aiff */; };
@@ -36,10 +37,13 @@
 		CCB09BF30F6A001777DF91FD /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33571F28B6F94757721FE7 /* Session.swift */; };
 		CD674FC11284CF9FE9F2254F /* TagSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BFC97A72D17AF6308CDF84 /* TagSettingsView.swift */; };
 		CDCCBF2CAD3EA0F1BCAADBA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFCF95E4E6B98F9D5042A6F6 /* Assets.xcassets */; };
+		D23451009F31676E925DB94D /* HistoryWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DA39DC1B2EBCFB00613AA9 /* HistoryWindow.swift */; };
 		D7A933E38ADC111718065FD9 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D118EE668A08D325AE6477D /* RingView.swift */; };
 		DBBA00563FC181EA3362BF97 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEEE847F8A3F640920F8CE6 /* SessionStore.swift */; };
+		DCCA1D74D5410DF729CD0CBA /* SessionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4A6F56F0F1FB8CBE1C2353 /* SessionEditor.swift */; };
 		EF0A0DB6446E9CA529741DE9 /* TimerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748CF90854C10FED269EAECD /* TimerSettings.swift */; };
 		F054F54F84BB904A0D1D2E76 /* TimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832DCAC67E05CD646C732839 /* TimeFormat.swift */; };
+		F0B098C34C9D6BC28D43E308 /* HistoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2983305E144E1CC00B9116DA /* HistoryState.swift */; };
 		FEABB8DDB285DA3ABF66951A /* SoftClick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8E5170AD020E5C64FE23500C /* SoftClick.aiff */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +59,11 @@
 
 /* Begin PBXFileReference section */
 		08BEE23DD5767ACAEFAF0996 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		093B6108D789B07CD9CBE265 /* SessionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionList.swift; sourceTree = "<group>"; };
+		1E4A6F56F0F1FB8CBE1C2353 /* SessionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEditor.swift; sourceTree = "<group>"; };
 		23D24811DBDD1C89041ECFAD /* Bell.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Bell.aiff; sourceTree = "<group>"; };
 		281617D39D7DA062A86E9CC1 /* Chime.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Chime.aiff; sourceTree = "<group>"; };
+		2983305E144E1CC00B9116DA /* HistoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryState.swift; sourceTree = "<group>"; };
 		2F276538DCA55609047A52DF /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
 		334C57151DA69B5D1EED8DCB /* Notifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
 		3479D45AC2B703323E705188 /* MenuBarLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLabel.swift; sourceTree = "<group>"; };
@@ -72,6 +79,7 @@
 		70DEB3B46224AE4A9FF4C5BF /* TimeFormatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatTests.swift; sourceTree = "<group>"; };
 		748CF90854C10FED269EAECD /* TimerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSettings.swift; sourceTree = "<group>"; };
 		76BFC97A72D17AF6308CDF84 /* TagSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSettingsView.swift; sourceTree = "<group>"; };
+		78DA39DC1B2EBCFB00613AA9 /* HistoryWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryWindow.swift; sourceTree = "<group>"; };
 		792E02A38AE86D71022A49DD /* SoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsView.swift; sourceTree = "<group>"; };
 		7D118EE668A08D325AE6477D /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
 		7EDC57D00BA64030F082362F /* Intervals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Intervals.entitlements; sourceTree = "<group>"; };
@@ -196,6 +204,10 @@
 		9106BEC4595CF1D2C26B79F2 /* History */ = {
 			isa = PBXGroup;
 			children = (
+				2983305E144E1CC00B9116DA /* HistoryState.swift */,
+				78DA39DC1B2EBCFB00613AA9 /* HistoryWindow.swift */,
+				1E4A6F56F0F1FB8CBE1C2353 /* SessionEditor.swift */,
+				093B6108D789B07CD9CBE265 /* SessionList.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -356,6 +368,8 @@
 				7F1913727AEBEF899118DC35 /* AppDelegate.swift in Sources */,
 				2E1173E066377230619229A0 /* AppSettings.swift in Sources */,
 				8ADAB84E9187EC0E7C573D4D /* Clock.swift in Sources */,
+				F0B098C34C9D6BC28D43E308 /* HistoryState.swift in Sources */,
+				D23451009F31676E925DB94D /* HistoryWindow.swift in Sources */,
 				7128072A06D66171A928AFA4 /* IntervalsApp.swift in Sources */,
 				C3DCCFB7C019315629FC8A8B /* MenuBarLabel.swift in Sources */,
 				C2C0869DF0E8C5E09177D7A2 /* Notifier.swift in Sources */,
@@ -363,6 +377,8 @@
 				560E5554B7537666ED0ABD7A /* PopoverView.swift in Sources */,
 				D7A933E38ADC111718065FD9 /* RingView.swift in Sources */,
 				CCB09BF30F6A001777DF91FD /* Session.swift in Sources */,
+				DCCA1D74D5410DF729CD0CBA /* SessionEditor.swift in Sources */,
+				9DAEBA885147C42EAC486A26 /* SessionList.swift in Sources */,
 				7094CB18AE6FB4B387C22A3B /* SessionRecord.swift in Sources */,
 				DBBA00563FC181EA3362BF97 /* SessionStore.swift in Sources */,
 				245524CE999582320BA4A81E /* SettingsView.swift in Sources */,

@@ -51,7 +51,7 @@ Gatekeeper; building from source is the supported path.
 | 1 | Timer engine, persistence, unit tests | yes |
 | 2 | Menu bar countdown, popover, notifications, sounds | yes |
 | 3 | Session history and tags in SwiftData | yes |
-| 4 | History window with editing | |
+| 4 | History window with editing | yes |
 | 5 | Stats and CSV/JSON export | |
 | 6 | Appearance setting and polish pass | |
 

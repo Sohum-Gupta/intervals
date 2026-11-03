@@ -5,6 +5,7 @@ import SwiftUI
 struct PopoverView: View {
     let controller: AppController
     @Environment(\.openSettings) private var openSettings
+    @Environment(\.openWindow) private var openWindow
     @FocusState private var titleFocused: Bool
 
     private var engine: TimerEngine { controller.engine }
@@ -151,6 +152,15 @@ struct PopoverView: View {
         HStack {
             TodaySummary(controller: controller)
             Spacer()
+            Button {
+                NSApp.activate()
+                openWindow(id: "history")
+            } label: {
+                Image(systemName: "clock.arrow.circlepath")
+            }
+            .buttonStyle(.borderless)
+            .help("History")
+            .accessibilityLabel("History")
             Menu {
                 Button("Settings…") { showSettings() }
                     .keyboardShortcut(",")

@@ -121,3 +121,93 @@ struct DurationFormatTests {
         #expect(TimeFormat.summary(sessions: 3, focusSeconds: 4500) == "3 sessions · 1h 15m")
     }
 }
+
+@MainActor
+struct ManualEditTests {
+    private func makeStore() throws -> SessionStore {
+        SessionStore(container: try SessionStore.makeContainer(inMemory: true))
+    }
+
+    private let t0 = Date(timeIntervalSince1970: 1_800_000_000)
+
+    @Test func manualSessionIsCompletedWorkFlaggedManual() throws {
+        let store = try makeStore()
+        let tag = try #require(store.addTag(name: "Reading"))
+        let session = store.addManualSession(startedAt: t0, endedAt: t0.addingTimeInterval(40 * 60), title: " Paper ", tag: tag)
+        #expect(session.phase == .work)
+        #expect(session.completed)
+        #expect(session.isManual)
+        #expect(session.plannedSeconds == 2400)
+        #expect(session.durationSeconds == 2400)
+        #expect(session.title == "Paper")
+        #expect(session.tag === tag)
+    }
+
+    @Test func updateChangesFieldsAndMarksManual() throws {
+        let store = try makeStore()
+        let session = store.record(SessionRecord(
+            phase: .work, startedAt: t0, endedAt: t0.addingTimeInterval(1500), plannedSeconds: 1500,
+            completed: true, title: "Draft", tagID: nil
+        ))
+        #expect(session.isManual == false)
+        let tag = try #require(store.addTag(name: "Writing"))
+        store.update(session, startedAt: t0.addingTimeInterval(60), endedAt: t0.addingTimeInterval(1800), title: "Final", tag: tag)
+        #expect(session.isManual)
+        #expect(session.title == "Final")
+        #expect(session.tag === tag)
+        #expect(session.durationSeconds == 1740)
+        #expect(session.plannedSeconds == 1500)
+    }
+
+    @Test func updateDropsPausedTimeThatNoLongerFits() throws {
+        let store = try makeStore()
+        let session = store.record(SessionRecord(
+            phase: .work, startedAt: t0, endedAt: t0.addingTimeInterval(5100), plannedSeconds: 1500,
+            completed: true, title: "", tagID: nil, pausedSeconds: 3600
+        ))
+        store.update(session, startedAt: t0, endedAt: t0.addingTimeInterval(1500), title: "", tag: nil)
+        #expect(session.pausedSeconds == 0)
+        #expect(session.durationSeconds == 1500)
+    }
+}
+
+@MainActor
+struct HistoryStateTests {
+    @Test func deleteWaitsForTheToastAndUndoRestores() async throws {
+        let store = SessionStore(container: try SessionStore.makeContainer(inMemory: true))
+        let history = HistoryState()
+        history.store = store
+        let t0 = Date(timeIntervalSince1970: 1_800_000_000)
+        let a = store.addManualSession(startedAt: t0, endedAt: t0.addingTimeInterval(600))
+        let b = store.addManualSession(startedAt: t0.addingTimeInterval(1000), endedAt: t0.addingTimeInterval(1600))
+
+        history.delete(a)
+        #expect(history.pendingDeletion === a)
+        #expect(try store.context.fetch(FetchDescriptor<Session>()).count == 2)
+
+        history.undoDeletion()
+        #expect(history.pendingDeletion == nil)
+        #expect(try store.context.fetch(FetchDescriptor<Session>()).count == 2)
+
+        // Deleting another while one is pending commits the first.
+        history.delete(a)
+        history.delete(b)
+        #expect(history.pendingDeletion === b)
+        #expect(try store.context.fetch(FetchDescriptor<Session>()).count == 1)
+
+        history.commitPendingDeletion()
+        #expect(try store.context.fetch(FetchDescriptor<Session>()).isEmpty)
+    }
+
+    @Test func presetsSetTheRange() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/Los_Angeles")!
+        let now = calendar.date(from: DateComponents(year: 2026, month: 11, day: 2, hour: 15))!
+        let history = HistoryState()
+        history.applyPreset(.week, now: now, calendar: calendar)
+        #expect(history.rangeStart == calendar.date(from: DateComponents(year: 2026, month: 10, day: 27))!)
+        #expect(history.rangeEnd == now)
+        history.applyPreset(.all, now: now, calendar: calendar)
+        #expect(history.rangeStart == Date(timeIntervalSince1970: 0))
+    }
+}

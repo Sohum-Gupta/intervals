@@ -17,6 +17,9 @@ final class AppController {
     /// Which Settings tab to show when the window opens next.
     var settingsTab: SettingsTab = .timer
 
+    /// Filters, selection and the pending undo for the History window.
+    let history = HistoryState()
+
     private init() {
         let settings = AppSettings()
         let engine = TimerEngine(settings: settings.timer)
@@ -31,6 +34,7 @@ final class AppController {
         self.settings = settings
         self.engine = engine
         self.store = store
+        history.store = store
 
         settings.onTimerChange = { engine.settings = $0 }
         engine.sessionSink = { store.record($0) }

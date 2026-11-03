@@ -63,6 +63,39 @@ final class SessionStore {
         commit()
     }
 
+    /// A work session entered by hand (F9). Counts as completed.
+    @discardableResult
+    func addManualSession(startedAt: Date, endedAt: Date, title: String = "", tag: Tag? = nil, now: Date = Date()) -> Session {
+        let seconds = max(0, Int(endedAt.timeIntervalSince(startedAt).rounded()))
+        let session = Session(
+            phase: .work,
+            startedAt: startedAt,
+            endedAt: endedAt,
+            plannedSeconds: seconds,
+            completed: true,
+            title: title.trimmingCharacters(in: .whitespacesAndNewlines),
+            tag: tag,
+            isManual: true,
+            createdAt: now
+        )
+        context.insert(session)
+        commit()
+        return session
+    }
+
+    /// Apply an edit from the History window. Marks the session as manual.
+    func update(_ session: Session, startedAt: Date, endedAt: Date, title: String, tag: Tag?) {
+        session.startedAt = startedAt
+        session.endedAt = endedAt
+        session.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        session.tag = tag
+        if session.pausedSeconds > Int(endedAt.timeIntervalSince(startedAt)) {
+            session.pausedSeconds = 0
+        }
+        session.isManual = true
+        commit()
+    }
+
     /// Completed work sessions and total focus time for the calendar day containing `date`.
     func daySummary(for date: Date, calendar: Calendar = .current) -> (sessions: Int, focusSeconds: Int) {
         let start = calendar.startOfDay(for: date)
