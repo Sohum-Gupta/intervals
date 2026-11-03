@@ -1,62 +1,107 @@
 # Intervals
 
-A native macOS menu bar Pomodoro timer for one person. No paywall, no account,
-no sync, no network. The full design is in [SPEC.md](SPEC.md); it is built one
-milestone at a time with Claude Code, following [CLAUDE.md](CLAUDE.md).
+A native macOS menu bar Pomodoro timer for one person. No account, no sync, no
+network, no paywall. It replaces apps like Be Focused and Flow for daily use on
+a single Mac.
+
+## What it does
+
+- **Timer in the menu bar.** The countdown sits next to the clock
+  (`● 24:59` while focusing, `○ 04:30` on a break, `‖` when paused). Clicking
+  it opens a popover with a progress ring, the phase name, a title field and a
+  tag picker, and Start / Pause / Skip / Reset. Space, ⌘→ and ⌘. drive it from
+  the keyboard.
+- **Configurable intervals.** Focus, short break and long break lengths, how
+  many sessions come before a long break, and optional auto-start of the next
+  focus session. Breaks always start on their own; when a break's time is up
+  the timer counts up until you start the next session, so the real gap is
+  recorded.
+- **Never loses state.** The engine works from stored timestamps, not a
+  running counter. Quit, crash, sleep the Mac, or leave it paused for a day:
+  the interval picks up exactly where it should.
+- **Alerts.** A macOS notification and one of four bundled sounds (or the
+  system beep, or none) at the end of every interval, with a volume slider and
+  an optional soft tick during focus.
+- **History.** Every session is stored locally. A History window lists today
+  and any date range, grouped by day, with a tag filter. Double-click a row to
+  edit its start, end, title or tag; ⌘N adds one by hand; ⌫ deletes with a
+  six-second undo.
+- **Tags.** Create tags with a name and colour, pick one before or during a
+  session, and see focus time broken down by tag.
+- **Stats.** Today, this week and this month at a glance, a 14-day focus
+  chart, and a per-tag table. Paused time never counts as focus.
+- **Export.** All sessions as CSV or JSON, from the History toolbar or
+  Settings > Data.
+- **Appearance.** Light, dark or follow the system.
 
 ## Requirements
 
-Intervals is only built and tested on the machine it was written on. It should
-work on any Mac with the same setup, and no other setup is supported:
+Intervals is built and tested on one machine, and only that setup is
+supported:
 
-- macOS 26.5 or later, Apple silicon
+- macOS 26.5 or later on Apple silicon
 - Xcode 26.6 (the Command Line Tools alone are not enough)
-- [Homebrew](https://brew.sh) with `xcodegen` (`brew install xcodegen`)
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen): `brew install xcodegen`
 
-## Build and run
+## Install
 
 ```sh
 git clone https://github.com/Sohum-Gupta/intervals.git
 cd intervals
-make run
+make install
 ```
 
-`make run` regenerates the Xcode project from `project.yml`, builds a Debug
-copy, and opens it. The app lives in the menu bar, not the Dock. Look for a
-small circle near the clock. Other targets:
+`make install` generates the Xcode project, builds a Release copy, puts it in
+`/Applications`, and launches it. After that, open it from Spotlight or
+Raycast like any other app. It has no Dock icon; look for a small circle near
+the clock in the menu bar.
 
-```sh
-make install # Release build into /Applications, so Spotlight and Raycast can launch it
-make build   # build only, warnings are errors
-make test    # run the unit tests
-make clean   # delete the build folder
+Other targets:
+
+| Target | What it does |
+| --- | --- |
+| `make run` | Debug build, launched from the build folder |
+| `make test` | Unit tests |
+| `make build` | Debug build only; warnings are errors |
+| `make icon` | Redraw the app icon layers |
+| `make sounds` | Regenerate the alert sounds |
+| `make clean` | Delete the build folder |
+
+If Xcode lives somewhere other than `/Applications/Xcode.app`, set
+`DEVELOPER_DIR` to its `Contents/Developer` folder first.
+
+### Signing and notifications
+
+The project signs with an Apple Development certificate; the team id is in
+`project.yml`. Change it to your own team, or to `-` for ad-hoc signing if you
+have no certificate. macOS only delivers notifications to apps signed with a
+real certificate, and even then it may not show the permission prompt; if no
+banner appears when an interval ends, switch Intervals on in System Settings >
+Notifications. The sound still plays either way.
+
+The app is not notarized, so only copies you build yourself run without
+Gatekeeper prompts.
+
+## How it is built
+
+Swift 6, SwiftUI, SwiftData, Swift Charts and UserNotifications, with no
+third-party packages. The timer is a pure state machine with an injected clock,
+covered by unit tests that jump time to simulate sleep and relaunch. The full
+design, including every decision, is in [SPEC.md](SPEC.md); notes for working
+on the code are in [CLAUDE.md](CLAUDE.md).
+
+```
+Intervals/
+  App/        app entry, settings, sounds, notifications
+  Engine/     timer state machine, clock, persistence
+  Models/     Session, Tag, stats, export
+  Views/      MenuBar, History, Stats, Settings
+  Resources/  sounds, app icon, accent colour
+IntervalsTests/
+Tools/        icon and sound generators
 ```
 
-If Xcode is installed somewhere other than `/Applications/Xcode.app`, set
-`DEVELOPER_DIR` to its `Contents/Developer` folder before running `make`.
-
-The project signs with an Apple Development certificate (team in
-`project.yml`); macOS refuses notifications to ad-hoc signed apps. If no
-permission prompt appears on first launch, turn Intervals on in System
-Settings > Notifications. Without a certificate the end-of-interval alert is
-sound only.
-
-The build is signed ad hoc and not notarized, so a copy built on your own Mac
-runs without any prompts. A copy downloaded from elsewhere would be blocked by
-Gatekeeper; building from source is the supported path.
-
-## Status
-
-All six milestones are done; the app is feature-complete against SPEC.md.
-
-| Milestone | What it adds | Done |
-| --- | --- | --- |
-| 1 | Timer engine, persistence, unit tests | yes |
-| 2 | Menu bar countdown, popover, notifications, sounds | yes |
-| 3 | Session history and tags in SwiftData | yes |
-| 4 | History window with editing | yes |
-| 5 | Stats and CSV/JSON export | yes |
-| 6 | Appearance setting, app icon and polish pass | yes |
+Data lives in `~/Library/Containers/com.sohum.intervals/Data/Library/Application Support/Intervals/`.
 
 ## License
 
