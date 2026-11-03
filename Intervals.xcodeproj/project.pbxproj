@@ -27,6 +27,7 @@
 		560E5554B7537666ED0ABD7A /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E350B91D0A9C44BE768D48 /* PopoverView.swift */; };
 		7094CB18AE6FB4B387C22A3B /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA420BF68EA18EC53D0CAB96 /* SessionRecord.swift */; };
 		7128072A06D66171A928AFA4 /* IntervalsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441928E21B5D9726835DB99B /* IntervalsApp.swift */; };
+		723F77B6A90EBF72A8ED01E6 /* AppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121C85F35690484E4C4E24EE /* AppearanceSettingsView.swift */; };
 		794F1BD16F9366C71C2703B8 /* Tick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 347B1B2E1C2E9F59C6BB6C66 /* Tick.aiff */; };
 		7F1913727AEBEF899118DC35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE72E6DAA618E99F733C4ADE /* AppDelegate.swift */; };
 		8186DF1BB1AC75A36CE300BA /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F276538DCA55609047A52DF /* TimerEngine.swift */; };
@@ -68,6 +69,7 @@
 		04EB9366FC66D9A610FEF728 /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
 		08BEE23DD5767ACAEFAF0996 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		093B6108D789B07CD9CBE265 /* SessionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionList.swift; sourceTree = "<group>"; };
+		121C85F35690484E4C4E24EE /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
 		1E4A6F56F0F1FB8CBE1C2353 /* SessionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEditor.swift; sourceTree = "<group>"; };
 		232F57A53B3E4ADF7602460B /* FocusChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusChart.swift; sourceTree = "<group>"; };
 		23D24811DBDD1C89041ECFAD /* Bell.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Bell.aiff; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		1E3BD7A22834460E579536FD /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				121C85F35690484E4C4E24EE /* AppearanceSettingsView.swift */,
 				9FF9A65F2FDDAE00AC03B573 /* DataSettingsView.swift */,
 				6EEBAC86D1E1CDD58E974106 /* SettingsView.swift */,
 				792E02A38AE86D71022A49DD /* SoundSettingsView.swift */,
@@ -390,6 +393,7 @@
 				1C622495CBCD080A01208B97 /* AppController.swift in Sources */,
 				7F1913727AEBEF899118DC35 /* AppDelegate.swift in Sources */,
 				2E1173E066377230619229A0 /* AppSettings.swift in Sources */,
+				723F77B6A90EBF72A8ED01E6 /* AppearanceSettingsView.swift in Sources */,
 				8ADAB84E9187EC0E7C573D4D /* Clock.swift in Sources */,
 				46433A72AC0C8045552587F0 /* DataSettingsView.swift in Sources */,
 				4B5344F1E7BA24E1E84615CE /* Exporter.swift in Sources */,

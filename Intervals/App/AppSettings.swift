@@ -35,6 +35,19 @@ enum AlertSound: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
+/// Light, dark or follow the system (F11).
+enum Appearance: String, CaseIterable, Identifiable, Sendable {
+    case system, light, dark
+    var id: String { rawValue }
+    var displayName: String {
+        switch self {
+        case .system: "System"
+        case .light: "Light"
+        case .dark: "Dark"
+        }
+    }
+}
+
 /// Every user setting, backed by UserDefaults under the keys named in SPEC.md.
 /// The timer portion is pushed to the engine whenever it changes.
 @MainActor
@@ -44,6 +57,7 @@ final class AppSettings {
         static let alertSound = "alertSound"
         static let alertVolume = "alertVolume"
         static let tickingEnabled = "tickingEnabled"
+        static let appearance = "appearance"
     }
 
     @ObservationIgnored private let defaults: UserDefaults
@@ -72,11 +86,16 @@ final class AppSettings {
         didSet { defaults.set(tickingEnabled, forKey: Key.tickingEnabled) }
     }
 
+    var appearance: Appearance {
+        didSet { defaults.set(appearance.rawValue, forKey: Key.appearance) }
+    }
+
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         timer = TimerSettings.load(from: defaults)
         alertSound = defaults.string(forKey: Key.alertSound).flatMap(AlertSound.init(rawValue:)) ?? .chime
         alertVolume = defaults.object(forKey: Key.alertVolume) as? Double ?? 0.7
         tickingEnabled = defaults.bool(forKey: Key.tickingEnabled)
+        appearance = defaults.string(forKey: Key.appearance).flatMap(Appearance.init(rawValue:)) ?? .system
     }
 }

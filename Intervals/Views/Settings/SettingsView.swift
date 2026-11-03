@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum SettingsTab: String, CaseIterable {
-    case timer, sounds, tags, data
+    case timer, sounds, appearance, tags, data
 }
 
 /// The standard Settings window (⌘,). Tabs arrive as their milestones do.
@@ -14,7 +14,10 @@ struct SettingsView: View {
                 TimerSettingsView(settings: controller.settings)
             }
             Tab("Sounds", systemImage: "speaker.wave.2", value: SettingsTab.sounds) {
-                SoundSettingsView(settings: controller.settings, sounds: controller.sounds)
+                SoundSettingsView(settings: controller.settings, sounds: controller.sounds, notifier: controller.notifier)
+            }
+            Tab("Appearance", systemImage: "circle.lefthalf.filled", value: SettingsTab.appearance) {
+                AppearanceSettingsView(settings: controller.settings)
             }
             Tab("Tags", systemImage: "tag", value: SettingsTab.tags) {
                 TagSettingsView(controller: controller)

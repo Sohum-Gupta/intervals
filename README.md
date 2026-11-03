@@ -46,6 +46,8 @@ Gatekeeper; building from source is the supported path.
 
 ## Status
 
+All six milestones are done; the app is feature-complete against SPEC.md.
+
 | Milestone | What it adds | Done |
 | --- | --- | --- |
 | 1 | Timer engine, persistence, unit tests | yes |
@@ -53,7 +55,7 @@ Gatekeeper; building from source is the supported path.
 | 3 | Session history and tags in SwiftData | yes |
 | 4 | History window with editing | yes |
 | 5 | Stats and CSV/JSON export | yes |
-| 6 | Appearance setting and polish pass | |
+| 6 | Appearance setting, app icon and polish pass | yes |
 
 ## License
 

@@ -46,6 +46,7 @@ final class AppController {
         engine.refresh()
         engine.startTicking()
         observeTicking()
+        observeAppearance()
     }
 
     func quit() {
@@ -65,6 +66,19 @@ final class AppController {
             notifier.post(for: transition)
         case .skipped, .started, .newDay:
             break
+        }
+    }
+
+    /// Apply the appearance setting app-wide, now and whenever it changes.
+    private func observeAppearance() {
+        withObservationTracking {
+            NSApplication.shared.appearance = switch settings.appearance {
+            case .system: nil
+            case .light: NSAppearance(named: .aqua)
+            case .dark: NSAppearance(named: .darkAqua)
+            }
+        } onChange: {
+            Task { @MainActor [weak self] in self?.observeAppearance() }
         }
     }
 

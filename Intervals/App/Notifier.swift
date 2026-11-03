@@ -25,6 +25,11 @@ final class Notifier: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
+    /// Whether macOS will show our notifications right now.
+    func authorizationStatus() async -> UNAuthorizationStatus {
+        await center.notificationSettings().authorizationStatus
+    }
+
     func post(for transition: TimerTransition) {
         let content = UNMutableNotificationContent()
         switch transition.reason {

@@ -83,9 +83,12 @@ IntervalsTests/
 - `@Query` predicates are built in the list views' initialisers from `HistoryState`, so changing a filter recreates the query.
 - Accessibility path to the detail list, for scripted tests: `outline 1 of scroll area 1 of group 2 of splitter group 1 of group 1 of window "Today"`. Avoid `click at {x,y}`; it lands on whatever Space is in front.
 
-## App icon (Milestone 6)
+## Polish notes (Milestone 6)
 
-Sohum's direction (2026-11-02): a minimalist analog clock, modern and stylish, without much detail, visually in step with the app's UI (the accent ring, rounded type, dark card). Build it from the ring and dot language already used in the popover.
+- App icon: Sohum's direction (2026-11-02) was a minimalist analog clock, modern and stylish, matching the app's UI. `Tools/make_icon.swift` draws it (dark card, accent ring three quarters full, white hands at ten past ten, accent centre dot) at every size into the asset catalog; `make icon` regenerates it. Do not hand-edit the PNGs.
+- Appearance (system / light / dark) is applied through `NSApplication.shared.appearance` by `AppController.observeAppearance()`. Use `NSApplication.shared`, not `NSApp`: the controller is created before `NSApp` exists and the test host crashed on it.
+- The Sounds tab shows a "Notifications are off" row with a button to System Settings whenever macOS reports the app as not authorized; it re-checks when the app becomes active.
+- Settings tab order follows the spec: Timer, Sounds, Appearance, Tags, Data.
 
 ## Stats and export notes (Milestone 5)
 

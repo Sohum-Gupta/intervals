@@ -6,7 +6,7 @@ DERIVED = build/DerivedData
 XCB = xcodebuild -scheme Intervals -derivedDataPath $(DERIVED) -destination 'platform=macOS'
 QUIET = 2>&1 | grep -vE 'linkd|appintentsmetadata|^builtin|^ {4}|^$$' | grep -E 'error:|error|warning:|✔|✘|Executed|\*\*|Suite|Test run'
 
-.PHONY: project build test run clean
+.PHONY: project build test run clean icon sounds
 
 project:            ## regenerate Intervals.xcodeproj from project.yml
 	xcodegen generate
@@ -23,3 +23,10 @@ run: build          ## launch the menu bar app
 
 clean:
 	rm -rf build
+
+icon:               ## redraw the app icon into the asset catalog
+	swiftc -O -o build/make_icon Tools/make_icon.swift && build/make_icon Intervals/Resources/Assets.xcassets/AppIcon.appiconset
+
+sounds:             ## regenerate the bundled alert sounds
+	python3 Tools/make_sounds.py
+

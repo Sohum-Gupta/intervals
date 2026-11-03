@@ -211,3 +211,15 @@ struct HistoryStateTests {
         #expect(history.rangeStart == Date(timeIntervalSince1970: 0))
     }
 }
+
+struct AppearanceTests {
+    @Test func appearanceRoundTripsThroughDefaults() throws {
+        let suite = "com.sohum.intervals.tests.appearance"
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        #expect(Appearance(rawValue: "dark") == .dark)
+        #expect(Appearance.allCases.map(\.displayName) == ["System", "Light", "Dark"])
+        defaults.set("light", forKey: AppSettings.Key.appearance)
+        #expect(defaults.string(forKey: AppSettings.Key.appearance).flatMap(Appearance.init(rawValue:)) == .light)
+    }
+}
