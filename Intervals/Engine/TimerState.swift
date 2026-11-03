@@ -49,6 +49,8 @@ struct TimerSnapshot: Codable, Equatable, Sendable {
     /// The interval length, in seconds, when the current interval started.
     /// Kept outside `state` so pause/resume cannot change it.
     var plannedSeconds: Int = 0
+    /// Whether the "break is over" alert has fired for the current break.
+    var overtimeAnnounced: Bool = false
 }
 
 /// Where the snapshot lives. UserDefaults in the app, memory in tests.

@@ -56,3 +56,14 @@ IntervalsTests/
 - The clock protocol is `WallClock` (`SystemClock`, `ManualClock`) because `Clock` collides with the standard library.
 - Sandboxed preferences live in `~/Library/Containers/com.sohum.intervals/Data/Library/Preferences/`; plain `defaults read com.sohum.intervals` shows a different, empty domain.
 
+## App layer notes (Milestone 2)
+
+- `AppController.shared` owns the engine, `AppSettings`, `SoundPlayer` and `Notifier`. Views get it passed in; nothing else is global.
+- Sounds are synthesised by `Tools/make_sounds.py` (plain Python plus `afconvert`). Re-run it to regenerate `Resources/Sounds/*.aiff`; do not hand-edit the files.
+- The sound and notification fire on automatic transitions only: focus complete, break over (once, via the engine's `breakEnded` event), and auto-started focus. Pressing Start, Skip or Reset is silent.
+- The ticking loop uses the alert volume.
+- The footer gear opens Settings on click and holds a small menu (Settings…, Quit Intervals) so ⌘Q has a home in the popover.
+- Space toggles the timer only when the title field is not focused; Return blurs the field.
+- **Notifications need a real signing identity.** Ad-hoc signed builds get "Notifications are not allowed for this application" from `UNUserNotificationCenter`. Once an Apple Development certificate for team `SQH2L2PNM9` exists in the keychain, set `DEVELOPMENT_TEAM` and `CODE_SIGN_IDENTITY: Apple Development` in `project.yml`.
+- Hand-testing: Screen Recording and Accessibility are granted to VS Code. `screencapture -R x,y,w,h` takes points (screen is 1512 pt wide); System Events can click `button N of group 1 of window 1` in the popover; `tell application "Intervals" to activate` brings the Settings window forward. zsh has a builtin `log`, so use `/usr/bin/log show` and `/usr/bin/log stream` for the unified log.
+

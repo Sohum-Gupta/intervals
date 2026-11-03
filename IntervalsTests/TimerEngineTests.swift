@@ -403,6 +403,33 @@ struct BreakOvertime {
         #expect(h.transitions.last == TimerTransition(from: .shortBreak, to: .work, at: startAt, reason: .started))
     }
 
+    @Test func breakEndIsAnnouncedExactlyOnceAtThePlannedEnd() {
+        let h = Harness()
+        let t0 = h.clock.now
+        h.engine.start()
+        h.advance(25 * 60)
+        h.advance(4 * 60)
+        #expect(h.transitions.count == 2)
+        h.advance(60)
+        h.advance(60)
+        h.advance(60)
+        let ended = h.transitions.filter { $0.reason == .breakEnded }
+        #expect(ended == [TimerTransition(from: .shortBreak, to: .shortBreak, at: t0.addingTimeInterval(30 * 60), reason: .breakEnded)])
+        h.engine.start()
+        h.advance(25 * 60)
+        h.advance(10 * 60)
+        #expect(h.transitions.filter { $0.reason == .breakEnded }.count == 2)
+    }
+
+    @Test func breakEndAfterSleepIsAnnouncedAtThePlannedEndNotNow() {
+        let h = Harness()
+        let t0 = h.clock.now
+        h.engine.start()
+        h.sleep(60 * 60)
+        h.engine.refresh()
+        #expect(h.transitions.last == TimerTransition(from: .shortBreak, to: .shortBreak, at: t0.addingTimeInterval(30 * 60), reason: .breakEnded))
+    }
+
     @Test func pauseIsIgnoredInOvertime() {
         let h = Harness()
         h.engine.start()

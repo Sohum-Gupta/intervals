@@ -170,6 +170,7 @@ final class TimerEngine {
         snapshot.state = .idle(nextPhase: .work)
         snapshot.completedWorkInCycle = 0
         snapshot.plannedSeconds = 0
+        snapshot.overtimeAnnounced = false
     }
 
     /// Re-read the clock and settle any deadline that has passed. Called at
@@ -235,7 +236,11 @@ final class TimerEngine {
                 return
             }
 
-            // Overtime: keep running and count up until Start.
+            // Overtime: keep running and count up until Start. Announce once.
+            if !snapshot.overtimeAnnounced {
+                snapshot.overtimeAnnounced = true
+                transitionHandler?(TimerTransition(from: phase, to: phase, at: endsAt, reason: .breakEnded))
+            }
             return
         }
     }
@@ -243,6 +248,7 @@ final class TimerEngine {
     private func begin(_ phase: Phase, at date: Date, reason: TimerTransition.Reason, from previous: Phase?) {
         let seconds = settings.seconds(for: phase)
         snapshot.plannedSeconds = seconds
+        snapshot.overtimeAnnounced = false
         snapshot.state = .running(phase: phase, startedAt: date, endsAt: date.addingTimeInterval(TimeInterval(seconds)))
         transitionHandler?(TimerTransition(from: previous, to: phase, at: date, reason: reason))
     }

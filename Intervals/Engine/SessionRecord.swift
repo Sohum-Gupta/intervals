@@ -22,6 +22,9 @@ struct TimerTransition: Equatable, Sendable {
         case completed
         /// The user skipped the interval.
         case skipped
+        /// A break reached its planned end and is now in overtime. Fires once
+        /// per break; `from` and `to` are the same phase.
+        case breakEnded
         /// The user pressed Start (from idle or from a break in overtime).
         case started
         /// Work began by itself because auto-start is on.

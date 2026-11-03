@@ -34,6 +34,12 @@ make clean   # delete the build folder
 If Xcode is installed somewhere other than `/Applications/Xcode.app`, set
 `DEVELOPER_DIR` to its `Contents/Developer` folder before running `make`.
 
+macOS only delivers notifications to apps signed with a real development
+certificate, so with the default ad-hoc signing the end-of-interval alert is
+sound only. To get notifications, add an Apple Development certificate in
+Xcode (Settings > Accounts > Manage Certificates) and set `DEVELOPMENT_TEAM`
+in `project.yml`.
+
 The build is signed ad hoc and not notarized, so a copy built on your own Mac
 runs without any prompts. A copy downloaded from elsewhere would be blocked by
 Gatekeeper; building from source is the supported path.
@@ -43,7 +49,7 @@ Gatekeeper; building from source is the supported path.
 | Milestone | What it adds | Done |
 | --- | --- | --- |
 | 1 | Timer engine, persistence, unit tests | yes |
-| 2 | Menu bar countdown, popover, notifications, sounds | |
+| 2 | Menu bar countdown, popover, notifications, sounds | yes |
 | 3 | Session history and tags in SwiftData | |
 | 4 | History window with editing | |
 | 5 | Stats and CSV/JSON export | |
