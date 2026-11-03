@@ -64,6 +64,6 @@ IntervalsTests/
 - The ticking loop uses the alert volume.
 - The footer gear opens Settings on click and holds a small menu (Settings…, Quit Intervals) so ⌘Q has a home in the popover.
 - Space toggles the timer only when the title field is not focused; Return blurs the field.
-- **Notifications need a real signing identity.** Ad-hoc signed builds get "Notifications are not allowed for this application" from `UNUserNotificationCenter`. Once an Apple Development certificate for team `SQH2L2PNM9` exists in the keychain, set `DEVELOPMENT_TEAM` and `CODE_SIGN_IDENTITY: Apple Development` in `project.yml`.
+- **Notifications need a real signing identity and a manual switch on this Mac.** The project signs with the Apple Development certificate for team `SQH2L2PNM9` (set in `project.yml`). Ad-hoc builds get "Notifications are not allowed for this application". Even signed, this Mac never showed the permission prompt and the daemon reported the app as Denied; the fix was turning Intervals on by hand in System Settings > Notifications (done 2026-11-02). The authorization request logs its result under subsystem `com.sohum.intervals`, category `notifications`.
 - Hand-testing: Screen Recording and Accessibility are granted to VS Code. `screencapture -R x,y,w,h` takes points (screen is 1512 pt wide); System Events can click `button N of group 1 of window 1` in the popover; `tell application "Intervals" to activate` brings the Settings window forward. zsh has a builtin `log`, so use `/usr/bin/log show` and `/usr/bin/log stream` for the unified log.
 

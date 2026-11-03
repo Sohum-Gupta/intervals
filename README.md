@@ -34,11 +34,11 @@ make clean   # delete the build folder
 If Xcode is installed somewhere other than `/Applications/Xcode.app`, set
 `DEVELOPER_DIR` to its `Contents/Developer` folder before running `make`.
 
-macOS only delivers notifications to apps signed with a real development
-certificate, so with the default ad-hoc signing the end-of-interval alert is
-sound only. To get notifications, add an Apple Development certificate in
-Xcode (Settings > Accounts > Manage Certificates) and set `DEVELOPMENT_TEAM`
-in `project.yml`.
+The project signs with an Apple Development certificate (team in
+`project.yml`); macOS refuses notifications to ad-hoc signed apps. If no
+permission prompt appears on first launch, turn Intervals on in System
+Settings > Notifications. Without a certificate the end-of-interval alert is
+sound only.
 
 The build is signed ad hoc and not notarized, so a copy built on your own Mac
 runs without any prompts. A copy downloaded from elsewhere would be blocked by
